@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Service
@@ -29,8 +31,8 @@ public class CentroEducativoService {
 	public void cargarDatosDesdeCSV(String rutaArchivo, String delimitador) {
 		try {
 			InputStream is = getClass().getClassLoader().getResourceAsStream("listado_centros.csv");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+			
 			String linea;
 			reader.readLine(); // Saltar encabezado
 			while ((linea = reader.readLine()) != null) {
