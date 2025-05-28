@@ -12,6 +12,6 @@ public class CargaInicial implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        centroEducativoService.cargarDatosDesdeCSV("listado_centros.csv","$");
+        //centroEducativoService.cargarDatosDesdeCSV("listado_centros.csv","$");
     }
 }
