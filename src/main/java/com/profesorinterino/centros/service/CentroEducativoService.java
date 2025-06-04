@@ -1,17 +1,22 @@
 package com.profesorinterino.centros.service;
 
-import com.profesorinterino.centros.model.*;
-import com.profesorinterino.centros.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.profesorinterino.centros.model.CentroEducativo;
+import com.profesorinterino.centros.model.ComunidadAutonoma;
+import com.profesorinterino.centros.model.Localidad;
+import com.profesorinterino.centros.model.Provincia;
+import com.profesorinterino.centros.repository.CentroEducativoRepository;
+import com.profesorinterino.centros.repository.ComunidadAutonomaRepository;
+import com.profesorinterino.centros.repository.LocalidadRepository;
+import com.profesorinterino.centros.repository.ProvinciaRepository;
 
 @Service
 public class CentroEducativoService {
@@ -81,4 +86,13 @@ public class CentroEducativoService {
 			e.printStackTrace();
 		}
 	}
+	
+	
+    public CentroEducativoService(CentroEducativoRepository centroRepo) {
+        this.centroRepo = centroRepo;
+    }
+
+    public List<CentroEducativo> buscarCentros(String nombre, Long provinciaId, Long localidadId) {
+        return centroRepo.buscar(nombre, provinciaId, localidadId);
+    }
 }

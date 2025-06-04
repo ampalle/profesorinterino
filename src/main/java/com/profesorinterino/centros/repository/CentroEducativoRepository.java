@@ -9,15 +9,13 @@ import java.util.List;
 
 public interface CentroEducativoRepository extends JpaRepository<CentroEducativo, String> {
 
-    @Query("""
-        SELECT c FROM CentroEducativo c
-        WHERE (:nombre IS NULL OR LOWER(c.nombre) LIKE LOWER(CONCAT('%', :nombre, '%')))
-          AND (:provinciaId IS NULL OR c.localidad.provincia.id = :provinciaId)
-          AND (:localidadId IS NULL OR c.localidad.id = :localidadId)
-    """)
-    List<CentroEducativo> buscar(
-        @Param("nombre") String nombre,
-        @Param("provinciaId") Long provinciaId,
-        @Param("localidadId") Long localidadId
-    );
+	@Query("""
+		    SELECT c FROM CentroEducativo c
+		    WHERE (:nombre IS NULL OR LOWER(c.denominacionEspecifica) LIKE LOWER(CONCAT('%', :nombre, '%')))
+		      AND (:provinciaId IS NULL OR c.localidad.provincia.id = :provinciaId)
+		      AND (:localidadId IS NULL OR c.localidad.id = :localidadId)
+		""")
+		List<CentroEducativo> buscar(@Param("nombre") String nombre,
+		                             @Param("provinciaId") Long provinciaId,
+		                             @Param("localidadId") Long localidadId);
 }
