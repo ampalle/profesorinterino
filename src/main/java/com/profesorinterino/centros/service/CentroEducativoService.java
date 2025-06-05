@@ -5,10 +5,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.profesorinterino.centros.dto.CentroEducativoDTO;
 import com.profesorinterino.centros.model.CentroEducativo;
 import com.profesorinterino.centros.model.ComunidadAutonoma;
 import com.profesorinterino.centros.model.Localidad;
@@ -33,6 +35,10 @@ public class CentroEducativoService {
 	@Autowired
 	private CentroEducativoRepository centroRepo;
 
+    public CentroEducativoService(CentroEducativoRepository centroRepo) {
+        this.centroRepo = centroRepo;
+    }
+	
 	public void cargarDatosDesdeCSV(String rutaArchivo, String delimitador) {
 		try {
 			InputStream is = getClass().getClassLoader().getResourceAsStream("listado_centros.csv");
@@ -88,11 +94,10 @@ public class CentroEducativoService {
 	}
 	
 	
-    public CentroEducativoService(CentroEducativoRepository centroRepo) {
-        this.centroRepo = centroRepo;
-    }
-
-    public List<CentroEducativo> buscarCentros(String nombre, Long provinciaId, Long localidadId) {
-        return centroRepo.buscar(nombre, provinciaId, localidadId);
+    public List<CentroEducativoDTO> buscarCentros(String nombre, Long provinciaId, Long localidadId) {
+        return centroRepo.buscar(nombre, provinciaId, localidadId)
+                         .stream()
+                         .map(CentroEducativoDTO::new)
+                         .collect(Collectors.toList());
     }
 }
