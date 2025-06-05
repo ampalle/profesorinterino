@@ -49,7 +49,9 @@ GET /api/centros/buscar
 
 Ejemplo:
 ```
-GET http://localhost:8080/api/centros/buscar?nombre=IES&provinciaId=28
+GET http://localhost:8080/api/centros/buscar?provinciaId=43
+
+http://localhost:8080/api/centros/buscar?nombre=virgen%20de%20la%20paloma
 ```
 
 ## 🧠 Funcionamiento interno
