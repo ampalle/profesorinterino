@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CargaInicial implements CommandLineRunner {
+	//implements CommandLineRunner hace que Spring lo ejecute al arrancar la aplicación.
 
     @Autowired
     private CentroEducativoService centroEducativoService;
