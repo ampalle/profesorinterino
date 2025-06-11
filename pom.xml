@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.profesorinterino</groupId>
-    <artifactId>login-backend</artifactId>
+    <artifactId>centros_educativos</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
