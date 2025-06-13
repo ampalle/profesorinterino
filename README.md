@@ -12,37 +12,47 @@ Esta aplicación puede ejecutarse en una instancia EC2 de Amazon Web Services, c
 
 ## 🏗️ Estructura del Proyecto
 
-El proyecto está organizado en cuatro capas principales:
+La aplicación sigue una arquitectura por capas, donde cada una tiene una responsabilidad clara y desacoplada:
 
 ```
-Controller → Service → Repository → Entity
+Controller → Service → DTO ↔ Model (Entity) → Repository → Base de datos
 ```
 
-### 📦 1. Entity
+### 📦 Model (`com.profesorinterino.centros.model`)
 
-Clases del modelo de datos que se mapean a las tablas de la base de datos mediante JPA.
+Contiene las **entidades JPA** que se corresponden con las tablas de la base de datos. Cada clase (`CentroEducativo`, `Provincia`, etc.) representa una estructura persistente con anotaciones como `@Entity`, `@Id`, `@ManyToOne`, etc.
 
-- `CentroEducativo`
-- `Localidad`
-- `Provincia`
-- `ComunidadAutonoma`
+Estas clases son utilizadas internamente por el servicio y los repositorios para realizar operaciones de lectura y escritura.
 
-### 🗃️ 2. Repository
+### 🔄 DTO (`com.profesorinterino.centros.dto`)
 
-Interfaces que extienden `JpaRepository` para acceder a la base de datos de forma automática.
+Los **Data Transfer Objects** encapsulan los datos que se devuelven al frontend, evitando exponer directamente las entidades JPA. Permiten:
+
+- Controlar qué campos se exponen
+- Simplificar la estructura de datos enviada
+- Evitar bucles infinitos en la serialización JSON
+- Aplicar formatos o estructuras específicas para cada caso de uso
+
+Ejemplo: `CentroEducativoDTO` transforma un `CentroEducativo` incluyendo solo el código, nombre, localidad y provincia en texto plano.
+
+### ⚙️ Service (`com.profesorinterino.centros.service`)
+
+Contiene la **lógica de negocio**. Se encarga de orquestar llamadas a los repositorios, transformar entidades en DTOs y gestionar el flujo de datos.
+
+También incluye procesos como la carga de datos desde CSV (`cargarDatosDesdeCSV`), validaciones o asignación de IDs estándar a entidades.
+
+### 🗃️ Repository (`com.profesorinterino.centros.repository`)
+
+Son interfaces que extienden `JpaRepository` y permiten realizar operaciones en la base de datos sin escribir SQL manualmente. Spring genera automáticamente la implementación en tiempo de ejecución.
 
 Ejemplo:
 ```java
-List<CentroEducativo> buscar(String nombre, Long provinciaId, Long localidadId);
+Optional<Provincia> findByNombreAndComunidadAutonomaId(String nombre, Long comunidadId);
 ```
 
-### ⚙️ 3. Service
+### 🌐 Controller (`com.profesorinterino.centros.controller`)
 
-Contiene la lógica de negocio. Llama a los repositorios y devuelve resultados al controlador.
-
-### 🌐 4. Controller
-
-Define los endpoints REST que se exponen al usuario.
+Define los **endpoints REST** que se exponen al cliente (por ejemplo, un frontend React). Recibe peticiones HTTP, llama a los servicios y devuelve los resultados como JSON.
 
 ## 🚀 Endpoints disponibles
 
@@ -123,7 +133,7 @@ Credenciales por defecto:
 ```properties
 spring.datasource.url=jdbc:mysql://<ENDPOINT_RDS>:3306/centros_educativos
 spring.datasource.username=admin
-spring.datasource.password=******
+spring.datasource.password=******  
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
@@ -134,8 +144,8 @@ server.port=8080
 
 ## 🛠️ Requisitos para ejecutar el proyecto
 
-- Java 17
-- Maven 3.8+
+- Java 17  
+- Maven 3.8+  
 - IDE recomendado: Eclipse, IntelliJ o VS Code
 
 ### Para ejecutar en local:
