@@ -6,7 +6,6 @@ import java.util.Set;
 @Entity
 public class Provincia {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
