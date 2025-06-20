@@ -119,10 +119,10 @@ public class CentroEducativoService {
 	
 	public void cargarDatosDesdeCSV(String rutaArchivo, String delimitador) {
 		try {
-			InputStream is = getClass().getClassLoader().getResourceAsStream("listado_centros.csv");
+			InputStream is = getClass().getClassLoader().getResourceAsStream(rutaArchivo);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
 			String linea;
-			//reader.readLine(); // Saltar encabezado
+			reader.readLine(); // Saltar encabezado
 			while ((linea = reader.readLine()) != null) {
 				if (linea.length()<=1) continue;
 				String[] campos = linea.split("\\" + delimitador);
@@ -132,9 +132,13 @@ public class CentroEducativoService {
 				String denominacionGenerica = campos.length > 3 ? campos[3] : "";
 				String denominacionEspecifica = campos.length > 4 ? campos[4] : "";
 				String codigo = campos.length > 5 ? campos[5] : "";
-				String domicilio = campos.length > 6 ? campos[6] : "";
-				String cp = campos.length > 7 ? campos[7] : "";
-				String telefono = campos.length > 8 ? campos[8] : "";
+				String naturaleza= campos.length > 6 ? campos[6] : "";
+				String domicilio = campos.length > 7 ? campos[7] : "";
+				String cp = campos.length > 8 ? campos[8] : "";
+				String telefono = campos.length > 9 ? campos[9] : "";
+				Double latitud = campos.length > 10 && !campos[10].isBlank() ? Double.valueOf(campos[10]) : null;
+				Double longitud = campos.length > 11 && !campos[11].isBlank() ? Double.valueOf(campos[11]) : null;
+				String direccionNormalizada = campos.length > 12 ? campos[12] : "";
 				
 				ComunidadAutonoma comunidad = comunidadRepo.findByNombre(nombreComunidad)
 						.orElseGet(() -> {
@@ -179,8 +183,14 @@ public class CentroEducativoService {
 					centro.setDenominacionEspecifica(denominacionEspecifica);
 					centro.setDomicilio(domicilio);
 					centro.setCp(cp);
+					centro.setNaturaleza(naturaleza);
 					centro.setTelefono(telefono);
 					centro.setLocalidad(localidad);
+					centro.setDireccionNormalizada(
+						    (direccionNormalizada != null && !direccionNormalizada.isBlank()) ? direccionNormalizada : domicilio
+						);
+					centro.setLatitud(latitud);
+					centro.setLongitud(longitud);
 					centroRepo.save(centro);
 				}
 			}

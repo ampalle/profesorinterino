@@ -11,10 +11,45 @@ public class CentroEducativo {
     private String denominacionEspecifica;
     private String domicilio;
     private String cp;
-   
-	private String telefono;
+    private String naturaleza;
+	public String getNaturaleza() {
+		return naturaleza;
+	}
 
-    @ManyToOne
+	public void setNaturaleza(String naturaleza) {
+		this.naturaleza = naturaleza;
+	}
+
+	private String telefono;
+	private String direccionNormalizada;
+	private Double latitud;
+	private Double longitud;
+
+    public String getDireccionNormalizada() {
+		return direccionNormalizada;
+	}
+
+	public void setDireccionNormalizada(String direccionNormalizada) {
+		this.direccionNormalizada = direccionNormalizada;
+	}
+
+	public Double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(Double latitud) {
+		this.latitud = latitud;
+	}
+
+	public Double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(Double longitud) {
+		this.longitud = longitud;
+	}
+
+	@ManyToOne
     @JoinColumn(name = "localidad_id")
     private Localidad localidad;
 
