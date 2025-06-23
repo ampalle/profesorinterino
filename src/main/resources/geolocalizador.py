@@ -3,7 +3,7 @@ import requests
 import time
 
 API_KEY = "AIzaSyBW1284nK-PUZ7JPYKax7BI8t6-QYcJ-Kg"  # Sustituye por tu clave de Google Maps API
-INPUT_CSV = "listado_centros.csv"
+INPUT_CSV = "all_listado_centros.csv"
 OUTPUT_CSV = "centros_con_coordenadas.csv"
 
 def geocode_address(address):
@@ -19,7 +19,7 @@ def geocode_address(address):
     return None, None, None
 
 def main():
-    df = pd.read_csv(INPUT_CSV, sep='$')
+    df = pd.read_csv(INPUT_CSV, sep='$', dtype={'CODIGO': str, 'CODPOSTAL': str})
     df.columns = df.columns.str.strip().str.upper()  # Asegurar coincidencia exacta
 
     latitudes = []

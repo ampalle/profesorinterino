@@ -141,9 +141,8 @@ public class CentroEducativoService {
 				String denominacionGenerica = campos.length > 3 ? campos[3] : "";
 				String denominacionEspecifica = campos.length > 4 ? campos[4] : "";
 				String codigo = campos.length > 5 ? campos[5] : "";
-				//String naturaleza= campos.length > 6 ? campos[6] : "";
 				String domicilio = campos.length > 6 ? campos[6] : "";
-				String cp = campos.length > 7 ? campos[7] : "";
+				String cp = campos.length > 7 ? (campos[7].length() == 4 ? "0" + campos[7] : campos[7]) : "";
 				String telefono = campos.length > 8 ? campos[8] : "";
 				Double latitud = campos.length > 9 && !campos[9].isBlank() ? Double.valueOf(campos[9]) : null;
 				Double longitud = campos.length > 10 && !campos[10].isBlank() ? Double.valueOf(campos[10]) : null;
@@ -196,7 +195,6 @@ public class CentroEducativoService {
 					centro.setDenominacionEspecifica(denominacionEspecifica);
 					centro.setDomicilio(domicilio);
 					centro.setCp(cp);
-					//centro.setNaturaleza(naturaleza);
 					centro.setTelefono(telefono);
 					centro.setLocalidad(localidad);
 					centro.setDireccionNormalizada(
