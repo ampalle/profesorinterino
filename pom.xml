@@ -36,10 +36,10 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-   			<groupId>com.mysql</groupId>
-    		<artifactId>mysql-connector-j</artifactId>
-   			<version>8.0.33</version>
+		<dependency>
+  			<groupId>org.postgresql</groupId>
+  			<artifactId>postgresql</artifactId>
+  			<version>42.7.1</version>
 		</dependency>
 
         <!-- Desarrollo en caliente -->
