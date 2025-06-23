@@ -21,8 +21,12 @@ public class CentroEducativoDTO {
     private String comunidad;
     private String codigoPostal;
     private String telefono;
+	private Double latitud;
+	private Double longitud;
+	private String direccionNormalizada;
+    
 
-    /**
+	/**
      * Constructor vacío obligatorio para que Spring o frameworks puedan crear objetos automáticamente.
      */
     public CentroEducativoDTO() {
@@ -35,11 +39,14 @@ public class CentroEducativoDTO {
      */
     public CentroEducativoDTO(CentroEducativo centro) {
         this.codigo = centro.getCodigo();
-        this.nombre = centro.getDenominacionEspecifica(); // Traducción del campo real del modelo a un nombre más entendible
+        this.nombre = centro.getDenominacionEspecifica(); 
         this.domicilio = centro.getDomicilio();
         this.codigoPostal = centro.getCp();
         this.telefono = centro.getTelefono();
-
+        this.latitud=centro.getLatitud();
+        this.longitud=centro.getLongitud();
+        this.direccionNormalizada=centro.getDireccionNormalizada();
+    	
         // Extraemos nombres de relaciones si existen (evitamos NullPointerException)
         if (centro.getLocalidad() != null) {
             this.localidad = centro.getLocalidad().getNombre();
@@ -120,4 +127,29 @@ public class CentroEducativoDTO {
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
+    
+    public Double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(Double latitud) {
+		this.latitud = latitud;
+	}
+
+	public Double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(Double longitud) {
+		this.longitud = longitud;
+	}
+
+	public String getDireccionNormalizada() {
+		return direccionNormalizada;
+	}
+
+	public void setDireccionNormalizada(String direccionNormalizada) {
+		this.direccionNormalizada = direccionNormalizada;
+	}
+    
 }
