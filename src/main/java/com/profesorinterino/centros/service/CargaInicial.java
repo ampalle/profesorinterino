@@ -30,7 +30,7 @@ public class CargaInicial implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        centroEducativoService.cargarDatosDesdeCSV("centros_con_coordenadas.csv","$");
+        //centroEducativoService.cargarDatosDesdeCSV("centros_con_coordenadas.csv","$");
         // Cargamos los datos desde el archivo CSV "listado_centros.csv", usando $ como separador
     }
 }

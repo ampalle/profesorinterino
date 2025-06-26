@@ -72,7 +72,7 @@ GET /api/centros/buscar
 Ejemplo:
 ```
 GET http://localhost:8080/api/centros/buscar?provinciaId=43
-
+http://localhost:8082/api/centros/buscar?provinciaId=28&latitud=40.493082&longitud=-3.731277&radioKm=5
 http://localhost:8080/api/centros/buscar?nombre=virgen%20de%20la%20paloma
 ```
 
